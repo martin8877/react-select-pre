@@ -72,7 +72,7 @@
     "unexpected-react": "^4.1.0",
     "unexpected-sinon": "^10.4.0",
     "webpack": "^3.5.5",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^3.1.11"
   },
   "peerDependencies": {
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0",
