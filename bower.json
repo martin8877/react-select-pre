@@ -1,0 +1,33 @@
+{
+  "name": "react-select-pre",
+  "main": ["dist/react-select-pre.min.js", "dist/react-select-pre.min.css"],
+  "version": "1.0.0",
+  "homepage": "https://github.com/martin8877/react-select-pre",
+  "authors": ["Martin Hancak"],
+  "description": "A Select control built with and for ReactJS",
+  "moduleType": ["amd", "globals", "node"],
+  "dependencies": {
+    "classnames": "^2.2.0",
+    "react-input-autosize": "^2.0.1"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "select",
+    "multiselect",
+    "combobox",
+    "input",
+    "form",
+    "ui"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".editorconfig",
+    ".gitignore",
+    "package.json",
+    "src",
+    "node_modules",
+    "example",
+    "test"
+  ]
+}
