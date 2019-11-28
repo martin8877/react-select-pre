@@ -502,9 +502,9 @@ describe('Async', () => {
 
 
 	describe('props sync test', () => {
-		it('should update options on componentWillReceiveProps', () => {
+		it('should update options on UNSAFE_componentWillReceiveProps', () => {
 			createControl({});
-			asyncInstance.componentWillReceiveProps({
+			asyncInstance.UNSAFE_componentWillReceiveProps({
 				options: [{
 					label: 'bar',
 					value: 'foo',
@@ -514,12 +514,12 @@ describe('Async', () => {
 			expect(asyncNode.querySelector('[role=option]').textContent, 'to equal', 'bar');
 		});
 
-		it('should not update options on componentWillReceiveProps', () => {
+		it('should not update options on UNSAFE_componentWillReceiveProps', () => {
 			const props = { options: [] };
 			createControl(props);
 
 			const setStateStub = sinon.stub(asyncInstance, 'setState');
-			asyncInstance.componentWillReceiveProps(props);
+			asyncInstance.UNSAFE_componentWillReceiveProps(props);
 
 			expect(setStateStub, 'was not called');
 

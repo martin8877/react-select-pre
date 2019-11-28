@@ -1,6 +1,6 @@
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
-import uglify from 'rollup-plugin-uglify';
+import { uglify } from 'rollup-plugin-uglify';
 import { minify } from 'uglify-es';
 
 const name = 'Select';
@@ -41,8 +41,8 @@ export default [
 			name: name,
 			file: path + '.js',
 			format: 'umd',
+			globals: globals,
 		},
-		globals: globals,
 		external: external,
 		plugins: [babel(babelOptions(false)), resolve()],
 	},
@@ -52,8 +52,8 @@ export default [
 			name: name,
 			file: path + '.min.js',
 			format: 'umd',
+			globals: globals,
 		},
-		globals: globals,
 		external: external,
 		plugins: [babel(babelOptions(true)), resolve(), uglify({}, minify)],
 	},

@@ -183,127 +183,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
-
-
-
-
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-
-
-
-
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -327,10 +206,6 @@ var createClass = function () {
     return Constructor;
   };
 }();
-
-
-
-
 
 var defineProperty = function (obj, key, value) {
   if (key in obj) {
@@ -361,8 +236,6 @@ var _extends = Object.assign || function (target) {
   return target;
 };
 
-
-
 var inherits = function (subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -378,14 +251,6 @@ var inherits = function (subClass, superClass) {
   });
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 };
-
-
-
-
-
-
-
-
 
 var objectWithoutProperties = function (obj, keys) {
   var target = {};
@@ -641,6 +506,7 @@ Value.propTypes = {
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/react-select
 */
+
 var stringifyValue = function stringifyValue(value) {
 	return typeof value === 'string' ? value : value !== null && JSON.stringify(value) || '';
 };
@@ -698,7 +564,7 @@ var handleRequired = function handleRequired(value, multi) {
 	return multi ? value.length === 0 : Object.keys(value).length === 0;
 };
 
-var Select$1 = function (_React$Component) {
+var Select = function (_React$Component) {
 	inherits(Select, _React$Component);
 
 	function Select(props) {
@@ -721,8 +587,8 @@ var Select$1 = function (_React$Component) {
 	}
 
 	createClass(Select, [{
-		key: 'componentWillMount',
-		value: function componentWillMount() {
+		key: 'UNSAFE_componentWillMount',
+		value: function UNSAFE_componentWillMount() {
 			this._instancePrefix = 'react-select-' + (this.props.instanceId || ++instanceId) + '-';
 			var valueArray = this.getValueArray(this.props.value);
 
@@ -743,8 +609,8 @@ var Select$1 = function (_React$Component) {
 			}
 		}
 	}, {
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
+		key: 'UNSAFE_componentWillReceiveProps',
+		value: function UNSAFE_componentWillReceiveProps(nextProps) {
 			var valueArray = this.getValueArray(nextProps.value, nextProps);
 
 			if (nextProps.required) {
@@ -1672,14 +1538,14 @@ var Select$1 = function (_React$Component) {
 		}
 	}, {
 		key: 'filterOptions',
-		value: function filterOptions$$1(excludeOptions) {
+		value: function filterOptions$1(excludeOptions) {
 			var filterValue = this.state.inputValue;
 			var options = this.props.options || [];
 			if (this.props.filterOptions) {
 				// Maintain backwards compatibility with boolean attribute
-				var filterOptions$$1 = typeof this.props.filterOptions === 'function' ? this.props.filterOptions : filterOptions;
+				var filterOptions$1 = typeof this.props.filterOptions === 'function' ? this.props.filterOptions : filterOptions;
 
-				return filterOptions$$1(options, filterValue, excludeOptions, {
+				return filterOptions$1(options, filterValue, excludeOptions, {
 					filterOption: this.props.filterOption,
 					ignoreAccents: this.props.ignoreAccents,
 					ignoreCase: this.props.ignoreCase,
@@ -1902,7 +1768,7 @@ var Select$1 = function (_React$Component) {
 	return Select;
 }(React.Component);
 
-Select$1.propTypes = {
+Select.propTypes = {
 	'aria-describedby': PropTypes.string, // html id(s) of element(s) that should be used to describe this input (for assistive tech)
 	'aria-label': PropTypes.string, // aria label (for assistive tech)
 	'aria-labelledby': PropTypes.string, // html id of an element that should be used as the label (for assistive tech)
@@ -1981,7 +1847,7 @@ Select$1.propTypes = {
 	wrapperStyle: PropTypes.object // optional style to apply to the component wrapper
 };
 
-Select$1.defaultProps = {
+Select.defaultProps = {
 	arrowRenderer: arrowRenderer,
 	autosize: true,
 	backspaceRemoves: true,
@@ -2052,7 +1918,7 @@ var propTypes = {
 var defaultCache = {};
 
 var defaultChildren = function defaultChildren(props) {
-	return React.createElement(Select$1, props);
+	return React.createElement(Select, props);
 };
 
 var defaultProps = {
@@ -2097,8 +1963,8 @@ var Async = function (_Component) {
 			}
 		}
 	}, {
-		key: 'componentWillReceiveProps',
-		value: function componentWillReceiveProps(nextProps) {
+		key: 'UNSAFE_componentWillReceiveProps',
+		value: function UNSAFE_componentWillReceiveProps(nextProps) {
 			if (nextProps.options !== this.props.options) {
 				this.setState({
 					options: nextProps.options
@@ -2155,7 +2021,7 @@ var Async = function (_Component) {
 				promise.then(function (data) {
 					return callback(null, data);
 				}, function (error) {
-					return callback(error);
+					return callback();
 				});
 			}
 
@@ -2256,6 +2122,7 @@ var Async = function (_Component) {
 	return Async;
 }(Component);
 
+
 Async.propTypes = propTypes;
 Async.defaultProps = defaultProps;
 
@@ -2304,9 +2171,9 @@ var CreatableSelect = function (_React$Component) {
 		}
 	}, {
 		key: 'filterOptions',
-		value: function filterOptions$$1() {
+		value: function filterOptions() {
 			var _props2 = this.props,
-			    filterOptions$$1 = _props2.filterOptions,
+			    filterOptions = _props2.filterOptions,
 			    isValidNewOption = _props2.isValidNewOption,
 			    promptTextCreator = _props2.promptTextCreator,
 			    showNewOptionAtTop = _props2.showNewOptionAtTop;
@@ -2317,7 +2184,7 @@ var CreatableSelect = function (_React$Component) {
 
 			var excludeOptions = (arguments.length <= 2 ? undefined : arguments[2]) || [];
 
-			var filteredOptions = filterOptions$$1.apply(undefined, arguments) || [];
+			var filteredOptions = filterOptions.apply(undefined, arguments) || [];
 
 			if (isValidNewOption({ label: this.inputValue })) {
 				var _newOptionCreator = this.props.newOptionCreator;
@@ -2374,11 +2241,11 @@ var CreatableSelect = function (_React$Component) {
 		}
 	}, {
 		key: 'menuRenderer',
-		value: function menuRenderer$$1(params) {
-			var menuRenderer$$1 = this.props.menuRenderer;
+		value: function menuRenderer(params) {
+			var menuRenderer = this.props.menuRenderer;
 
 
-			return menuRenderer$$1(_extends({}, params, {
+			return menuRenderer(_extends({}, params, {
 				onSelect: this.onOptionSelect,
 				selectValue: this.onOptionSelect
 			}));
@@ -2445,7 +2312,7 @@ var CreatableSelect = function (_React$Component) {
 			// more reliable in real world use-cases.
 
 			if (!children) {
-				children = defaultChildren$2;
+				children = defaultChildren$1;
 			}
 
 			var props = _extends({}, restProps, {
@@ -2474,8 +2341,8 @@ var CreatableSelect = function (_React$Component) {
 	return CreatableSelect;
 }(React.Component);
 
-var defaultChildren$2 = function defaultChildren(props) {
-	return React.createElement(Select$1, props);
+var defaultChildren$1 = function defaultChildren(props) {
+	return React.createElement(Select, props);
 };
 
 var isOptionUnique = function isOptionUnique(_ref3) {
@@ -2649,8 +2516,8 @@ var AsyncCreatableSelect = function (_React$Component) {
 	return AsyncCreatableSelect;
 }(React.Component);
 
-var defaultChildren$1 = function defaultChildren(props) {
-	return React.createElement(Select$1, props);
+var defaultChildren$2 = function defaultChildren(props) {
+	return React.createElement(Select, props);
 };
 
 AsyncCreatableSelect.propTypes = {
@@ -2658,14 +2525,14 @@ AsyncCreatableSelect.propTypes = {
 };
 
 AsyncCreatableSelect.defaultProps = {
-	children: defaultChildren$1
+	children: defaultChildren$2
 };
 
-Select$1.Async = Async;
-Select$1.AsyncCreatable = AsyncCreatableSelect;
-Select$1.Creatable = CreatableSelect;
-Select$1.Value = Value;
-Select$1.Option = Option;
+Select.Async = Async;
+Select.AsyncCreatable = AsyncCreatableSelect;
+Select.Creatable = CreatableSelect;
+Select.Value = Value;
+Select.Option = Option;
 
-export { Async, AsyncCreatableSelect as AsyncCreatable, CreatableSelect as Creatable, Value, Option, menuRenderer as defaultMenuRenderer, arrowRenderer as defaultArrowRenderer, clearRenderer as defaultClearRenderer, filterOptions as defaultFilterOptions };
-export default Select$1;
+export default Select;
+export { Async, AsyncCreatableSelect as AsyncCreatable, CreatableSelect as Creatable, Option, Value, arrowRenderer as defaultArrowRenderer, clearRenderer as defaultClearRenderer, filterOptions as defaultFilterOptions, menuRenderer as defaultMenuRenderer };

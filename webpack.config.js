@@ -50,11 +50,6 @@ module.exports = {
     }
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
-      filename: 'common.js',
-      minChunk: 2,
-    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       inject: false,
