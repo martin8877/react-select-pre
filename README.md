@@ -7,11 +7,11 @@
 React-Select
 ============
 
-A Select control built with and for [React](http://facebook.github.io/react/index.html). Initially built for use in [KeystoneJS](http://www.keystonejs.com).
+A Select control built with and for [React](http://facebook.github.io/react/index.html).
 
 ## Demo & Examples
 
-Live demo: [https://v1.react-select.com/](https://v1.react-select.com/)
+Live demo: [https://martin8877.github.io/react-select-pre/](https://martin8877.github.io/react-select-pre//)
 
 
 ## Installation
